@@ -4,10 +4,8 @@ function googleIsReady() {
     var WEATHER_PIC_BASEURL = "http://openweathermap.org/img/w/";
 
     function getUrl(lat, lon) {
-
         url = `${BASEURL}?lat=${lat}&lon=${lon}&APPID=${APPID}`;
         return url;
-
     }
 
     function getLocationWeather(latitude, longitude) {
@@ -28,7 +26,7 @@ function googleIsReady() {
                     makeWeatherCall(dUrl);
                     mapAndView(myLatLng)
                 })
-            }
+            } else alert("Couldnt get your location information")
         }
     }
 
@@ -62,8 +60,6 @@ function googleIsReady() {
         wImg.src = WEATHER_PIC_BASEURL + data.weather[0].icon + ".png";
     }
 
-    getLocationWeather(null, null)
-
     function getMapAndWeather(place) {
         var geocoder = new google.maps.Geocoder();
         var address = place;
@@ -73,8 +69,6 @@ function googleIsReady() {
                 var latitude = Number(results[0].geometry.location.lat());
                 var longitude = Number(results[0].geometry.location.lng());
                 var myLatLng = { lat: latitude, lng: longitude };
-                console.log(results);
-
                 getLocationWeather(myLatLng.lat, myLatLng.lng);
                 mapAndView(myLatLng);
             } else alert('couldnt get lat and long of place')
@@ -84,17 +78,15 @@ function googleIsReady() {
     function mapAndView(myLatLng) {
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 20,
-            // mapTypeId: '',
             center: {
-                lat:myLatLng.lat,
-                lng:myLatLng.lng
+                lat: myLatLng.lat,
+                lng: myLatLng.lng
             }
         });
         var marker = new google.maps.Marker({
-            // position: myLatLng,
-            position:{
-                lat:myLatLng.lat,
-                lng:myLatLng.lng
+            position: {
+                lat: myLatLng.lat,
+                lng: myLatLng.lng
             },
             map: map,
             title: 'Hello World!'
@@ -109,6 +101,8 @@ function googleIsReady() {
                 zoom: 1
             });
     }
+
+    getLocationWeather(null, null)
 
     var placeInput = document.getElementById('placeInput');
     placeInput.addEventListener('click', function () {
